@@ -20,10 +20,10 @@ namespace msaccess_linker
             conn.Open();
         }
 
-        public DataTable select(string field, string tableName, string condition)
+        public DataTable select(string field, string tableName)
         {
             DataTable table = new DataTable();
-            string sql = "SELECT " + field + " FROM " + tableName + " WHERE " + condition;
+            string sql = "SELECT " + field + " FROM " + tableName;
             OleDbDataAdapter adapter = new OleDbDataAdapter(sql, conn);
             DataSet dataSet = new DataSet();
             dataSet.Clear();
@@ -32,13 +32,39 @@ namespace msaccess_linker
             return table;
         }
 
-        public void create(string tableName, string schema)
+        public DataTable select(string field, string tableName, string condition)
         {
+            string sql = "SELECT " + field + " FROM " + tableName + " WHERE " + condition;
+            DataTable table = new DataTable();
+            OleDbDataAdapter adapter = new OleDbDataAdapter(sql, conn);
+            DataSet dataSet = new DataSet();
+            dataSet.Clear();
+            adapter.Fill(dataSet);
+            table = dataSet.Tables[0];
+            return table;
+        }
+
+        public void insert(string tableName, string field, string value)
+        {
+            string sql = "INSERT INTO " + tableName + "(" + field + ") VALUES (" + value + ")";
             OleDbCommand cmd = new OleDbCommand();
             cmd.Connection = conn;
-            cmd.CommandText = "CREATE TABLE " + tableName + "(" + schema + ")";
+            cmd.CommandText = sql;
             cmd.ExecuteNonQuery();
-            cmd.Connection.Close();
+        }
+
+        public void create(string tableName, string schema)
+        {
+            string sql = "CREATE TABLE " + tableName + "(" + schema + ")";
+            OleDbCommand cmd = new OleDbCommand();
+            cmd.Connection = conn;
+            cmd.CommandText = sql;
+            cmd.ExecuteNonQuery();
+        }
+
+        public void close()
+        {
+            conn.Close();
         }
     }
 }
