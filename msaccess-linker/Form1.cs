@@ -24,7 +24,8 @@ namespace msaccess_linker
         private void Form1_Load(object sender, EventArgs e)
         {
             this.Text = "庫存管理系統 " + Info.version + " 版本";
-            this.ImeMode = System.Windows.Forms.ImeMode.OnHalf;
+            newTableText.ImeMode = System.Windows.Forms.ImeMode.OnHalf;
+            newTableText.Focus();
             DataTable table = serverDB.select("*", "schemas");
             DataRow[] result = table.Select();
             ComboBoxItem[] schemaComboBoxItems = ui.comboBoxItems(result, 1, 2);
@@ -69,11 +70,16 @@ namespace msaccess_linker
         private void addSchemaBtn_Click(object sender, EventArgs e)
         {
             serverDB.insert("schemas", "name, content", "'" + schemaNameText.Text + "', '" + schemaContentText.Text + "'");
-            ui.addComboBoxItem(schemaComboBox, schemaNameText.Text, schemaContentText.Text);
+            addSchemaComboBox(schemaNameText.Text, schemaContentText.Text);
 
             MessageBox.Show("模組已加入");
             schemaNameText.Text = "";
             schemaContentText.Text = "";
+        }
+
+        public void addSchemaComboBox(string name, string content)
+        {
+            ui.addComboBoxItem(schemaComboBox, name, content);
         }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)

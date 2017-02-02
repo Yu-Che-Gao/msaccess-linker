@@ -49,7 +49,7 @@ namespace msaccess_linker
 
         private void AddFieldBtn_Click(object sender, EventArgs e)
         {
-            dataGridView1.Rows.Add(new object[] { fieldNameTextBox.Text, "" });
+            dataGridView1.Rows.Add(new string[] { fieldNameTextBox.Text, "" });
             dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[1] = createComboBoxCell();
             fieldNameTextBox.Text = "";
         }
@@ -60,12 +60,15 @@ namespace msaccess_linker
             string[] fieldName = ui.getDataGridView(dataGridView1, "column2");
             string[] fieldType = ui.getDataGridView(dataGridView1, "column3");
             string content = "";
-            for (int i = 0; i < fieldName.Length - 1; i++)
-                content += fieldName[i] + "[" + Info.mapToValue(fieldType[i]) + "], ";
+            int i;
+            
+            for (i = 0; i < fieldName.Length - 1; i++)
+                content += "[" + fieldName[i] + "] " + Info.mapToValue(fieldType[i]) + ", ";
 
-            content += fieldName[fieldName.Length - 1] + "[" + Info.mapToValue(fieldType[fieldName.Length - 1]) + "]";
+            content += "[" + fieldName[i] + "] " + Info.mapToValue(fieldType[i]);
             serverDB.insert("schemas", "name, content", "'" + name + "', '" + content + "'");
             schemaListBox.Items.Add(name + ": " + content);
+            (Application.OpenForms[0] as Form1).addSchemaComboBox(schemaNameTextBox.Text, content);
 
             schemaNameTextBox.Text = "";
             initDataGridView();
