@@ -44,6 +44,12 @@ namespace msaccess_linker
             schemaLabel.Text = ((ComboBoxItem)schemaComboBox.SelectedItem).Value.ToString();
         }
 
+        private void tableSelectComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            DataTable table = clientDB.select("*", tableSelectComboBox.Text);
+            tableGridView.DataSource = table;
+        }
+
         private void addSchemaBtn_Click(object sender, EventArgs e)
         {
             serverDB.insert("schemas", "name, content", "'" + schemaNameText.Text + "', '" + schemaContentText.Text + "'");
@@ -59,11 +65,6 @@ namespace msaccess_linker
             this.Text = "關閉中...";
             clientDB.close();
             serverDB.close();
-        }
-
-        private void tableSelectComboBox_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
         }
     }
 

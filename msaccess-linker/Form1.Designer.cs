@@ -41,11 +41,11 @@
             this.label4 = new System.Windows.Forms.Label();
             this.addSchemaBtn = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.tableGridView = new System.Windows.Forms.DataGridView();
             this.tableSelectComboBox = new System.Windows.Forms.ComboBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tableGridView)).BeginInit();
             this.SuspendLayout();
             // 
             // addTableBtn
@@ -172,14 +172,15 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "新增模組";
             // 
-            // dataGridView1
+            // tableGridView
             // 
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(54, 509);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.RowTemplate.Height = 24;
-            this.dataGridView1.Size = new System.Drawing.Size(243, 134);
-            this.dataGridView1.TabIndex = 13;
+            this.tableGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.tableGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.tableGridView.Location = new System.Drawing.Point(54, 509);
+            this.tableGridView.Name = "tableGridView";
+            this.tableGridView.RowTemplate.Height = 24;
+            this.tableGridView.Size = new System.Drawing.Size(369, 134);
+            this.tableGridView.TabIndex = 13;
             // 
             // tableSelectComboBox
             // 
@@ -196,7 +197,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(797, 687);
             this.Controls.Add(this.tableSelectComboBox);
-            this.Controls.Add(this.dataGridView1);
+            this.Controls.Add(this.tableGridView);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Name = "Form1";
@@ -207,7 +208,7 @@
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tableGridView)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -227,7 +228,7 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Button addSchemaBtn;
         private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridView tableGridView;
         private System.Windows.Forms.ComboBox tableSelectComboBox;
     }
 }
