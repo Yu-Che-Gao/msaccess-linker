@@ -45,10 +45,7 @@ namespace msaccess_linker
         private void addSchemaBtn_Click(object sender, EventArgs e)
         {
             serverDB.insert("schemas", "name, content", "'" + schemaNameText.Text + "', '" + schemaContentText.Text + "'");
-            ComboBoxItem temp = new ComboBoxItem();
-            temp.Text = schemaNameText.Text;
-            temp.Value = schemaContentText.Text;
-            schemaComboBox.Items.Add(temp);
+            ui.addComboBoxItem(schemaComboBox, schemaNameText.Text, schemaContentText.Text);
 
             MessageBox.Show("模組已加入");
             schemaNameText.Text = "";
@@ -90,6 +87,14 @@ namespace msaccess_linker
             {
                 comboBox.Items.Add(item);
             }
+        }
+
+        public void addComboBoxItem(ComboBox comboBox, string text, object value)
+        {
+            ComboBoxItem temp = new ComboBoxItem();
+            temp.Text = text;
+            temp.Value = value;
+            comboBox.Items.Add(temp);
         }
     }
 }
