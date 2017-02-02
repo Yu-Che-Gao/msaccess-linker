@@ -41,8 +41,11 @@
             this.label4 = new System.Windows.Forms.Label();
             this.addSchemaBtn = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.tableSelectComboBox = new System.Windows.Forms.ComboBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
             // addTableBtn
@@ -169,11 +172,31 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "新增模組";
             // 
+            // dataGridView1
+            // 
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Location = new System.Drawing.Point(54, 509);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.RowTemplate.Height = 24;
+            this.dataGridView1.Size = new System.Drawing.Size(243, 134);
+            this.dataGridView1.TabIndex = 13;
+            // 
+            // tableSelectComboBox
+            // 
+            this.tableSelectComboBox.FormattingEnabled = true;
+            this.tableSelectComboBox.Location = new System.Drawing.Point(54, 471);
+            this.tableSelectComboBox.Name = "tableSelectComboBox";
+            this.tableSelectComboBox.Size = new System.Drawing.Size(121, 20);
+            this.tableSelectComboBox.TabIndex = 14;
+            this.tableSelectComboBox.SelectedIndexChanged += new System.EventHandler(this.tableSelectComboBox_SelectedIndexChanged);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(797, 489);
+            this.ClientSize = new System.Drawing.Size(797, 687);
+            this.Controls.Add(this.tableSelectComboBox);
+            this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Name = "Form1";
@@ -184,6 +207,7 @@
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -203,6 +227,8 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Button addSchemaBtn;
         private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.ComboBox tableSelectComboBox;
     }
 }
 

@@ -14,6 +14,7 @@ namespace msaccess_linker
     {
         DB clientDB = new DB("myTestingDB.mdb");
         DB serverDB = new DB("controlsDB.mdb");
+        UI ui = new UI();
         public Form1()
         {
             InitializeComponent();
@@ -23,14 +24,8 @@ namespace msaccess_linker
         {
             DataTable table = serverDB.select("*", "schemas");
             DataRow[] result = table.Select();
-
-            foreach (DataRow row in result)
-            {
-                ComboBoxItem temp = new ComboBoxItem();
-                temp.Text = row[1].ToString();
-                temp.Value = row[2].ToString();
-                schemaComboBox.Items.Add(temp);
-            }
+            ComboBoxItem[] schemaComboBoxItems = ui.comboBoxItems(result, 1, 2);
+            ui.addComboBoxItems(schemaComboBox, schemaComboBoxItems);
         }
 
         private void addTableBtn_Click(object sender, EventArgs e)
@@ -65,6 +60,36 @@ namespace msaccess_linker
             this.Text = "關閉中...";
             clientDB.close();
             serverDB.close();
+        }
+
+        private void tableSelectComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+    }
+
+    class UI
+    {
+        public ComboBoxItem[] comboBoxItems(DataRow[] array, int textIndex, int valueIndex)
+        {
+            ComboBoxItem[] temp = new ComboBoxItem[array.Length];
+            for (int i = 0; i < array.Length; i++)
+            {
+                DataRow row = array[i];
+                temp[i] = new ComboBoxItem();
+                temp[i].Text = row[textIndex].ToString();
+                temp[i].Value = row[valueIndex];
+            }
+
+            return temp;
+        }
+
+        public void addComboBoxItems(ComboBox comboBox, ComboBoxItem[] comboBoxItems)
+        {
+            foreach (var item in comboBoxItems)
+            {
+                comboBox.Items.Add(item);
+            }
         }
     }
 }
