@@ -34,8 +34,8 @@ namespace msaccess_linker
 
         public DataTable select(string field, string tableName)
         {
-            DataTable table = new DataTable();
             string sql = "SELECT " + field + " FROM " + tableName;
+            DataTable table = new DataTable();
             OleDbDataAdapter adapter = new OleDbDataAdapter(sql, conn);
             DataSet dataSet = new DataSet();
             dataSet.Clear();

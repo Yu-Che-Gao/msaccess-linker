@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using DataTypeExtension;
+using System.IO;
 
 namespace msaccess_linker
 {
@@ -24,21 +25,21 @@ namespace msaccess_linker
         private void Form1_Load(object sender, EventArgs e)
         {
             this.Text = "庫存管理系統 " + Info.version + " 版本";
-            newTableText.ImeMode = System.Windows.Forms.ImeMode.OnHalf;
-            newTableText.Focus();
-            DataTable table = serverDB.select("*", "schemas");
-            DataRow[] result = table.Select();
-            ComboBoxItem[] schemaComboBoxItems = ui.comboBoxItems(result, 1, 2);
-            ui.addComboBoxItems(schemaComboBox, schemaComboBoxItems);
             ui.addComboBoxItems(tableSelectComboBox, clientDB.getTables());
             initTabPage1();
         }
 
         private void initTabPage1()
         {
+            newTableText.ImeMode = ImeMode.OnHalf;
+            newTableText.Focus();
+            DataTable table = serverDB.select("*", "schemas");
+            DataRow[] result = table.Select();
+            ComboBoxItem[] schemaComboBoxItems = ui.comboBoxItems(result, 1, 2);
+            ui.addComboBoxItems(schemaComboBox, schemaComboBoxItems);
             ui.addComboBoxItem(connComboBox, clientDB.name());
             connComboBox.Text = clientDB.name();
-            DataTable table = new DataTable();
+            table = new DataTable();
             table.Columns.Add(clientDB.name() + "資料表列表");
             foreach (var row in clientDB.getTables())
                 table.Rows.Add(row);
@@ -51,9 +52,7 @@ namespace msaccess_linker
             clientDB.create(newTableText.Text, ((ComboBoxItem)schemaComboBox.SelectedItem).Value.ToString());
             ui.addComboBoxItem(tableSelectComboBox, newTableText.Text);
             MessageBox.Show("資料表已加入");
-            newTableText.Text = "";
-            schemaComboBox.Text = "";
-            schemaLabel.Text = "";
+            clearNewTablePanel();
         }
 
         private void schemaComboBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -71,15 +70,26 @@ namespace msaccess_linker
         {
             serverDB.insert("schemas", "name, content", "'" + schemaNameText.Text + "', '" + schemaContentText.Text + "'");
             addSchemaComboBox(schemaNameText.Text, schemaContentText.Text);
-
             MessageBox.Show("模組已加入");
-            schemaNameText.Text = "";
-            schemaContentText.Text = "";
+            clearNewSchema();
         }
 
         public void addSchemaComboBox(string name, string content)
         {
             ui.addComboBoxItem(schemaComboBox, name, content);
+        }
+
+        private void clearNewTablePanel()
+        {
+            newTableText.Text = "";
+            schemaComboBox.Text = "";
+            schemaLabel.Text = "";
+        }
+
+        private void clearNewSchema()
+        {
+            schemaNameText.Text = "";
+            schemaContentText.Text = "";
         }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
@@ -93,6 +103,22 @@ namespace msaccess_linker
         {
             SchemaManagePage form = new SchemaManagePage();
             form.Show();
+        }
+
+        private void importDBBtn_Click(object sender, EventArgs e)
+        {
+            openAccessDialog.FileName = "";
+            if (openAccessDialog.ShowDialog() == DialogResult.OK && openAccessDialog.FileName != null)
+            {
+                File.Copy(openAccessDialog.FileName, "./" + openAccessDialog.SafeFileName);
+            }
+        }
+
+        private void exportDBBtn_Click(object sender, EventArgs e)
+        {
+            saveAccessDialog.FileName = "";
+            if (saveAccessDialog.ShowDialog() == DialogResult.OK && saveAccessDialog.FileName != null)
+                File.Copy("./" + clientDB.name(), saveAccessDialog.FileName + ".mdb");
         }
     }
 }
