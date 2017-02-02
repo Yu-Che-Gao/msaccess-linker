@@ -29,14 +29,14 @@
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.fieldNameTextBox = new System.Windows.Forms.TextBox();
+            this.AddFieldBtn = new System.Windows.Forms.Button();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.label1 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.schemaNameTextBox = new System.Windows.Forms.TextBox();
             this.left2RightBtn = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.schemaListBox = new System.Windows.Forms.ListBox();
-            this.AddFieldBtn = new System.Windows.Forms.Button();
-            this.fieldNameTextBox = new System.Windows.Forms.TextBox();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.groupBox2.SuspendLayout();
@@ -48,13 +48,30 @@
             this.groupBox1.Controls.Add(this.AddFieldBtn);
             this.groupBox1.Controls.Add(this.dataGridView1);
             this.groupBox1.Controls.Add(this.label1);
-            this.groupBox1.Controls.Add(this.textBox1);
+            this.groupBox1.Controls.Add(this.schemaNameTextBox);
             this.groupBox1.Location = new System.Drawing.Point(13, 13);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(295, 416);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "定義模組";
+            // 
+            // fieldNameTextBox
+            // 
+            this.fieldNameTextBox.Location = new System.Drawing.Point(24, 369);
+            this.fieldNameTextBox.Name = "fieldNameTextBox";
+            this.fieldNameTextBox.Size = new System.Drawing.Size(162, 22);
+            this.fieldNameTextBox.TabIndex = 4;
+            // 
+            // AddFieldBtn
+            // 
+            this.AddFieldBtn.Location = new System.Drawing.Point(192, 369);
+            this.AddFieldBtn.Name = "AddFieldBtn";
+            this.AddFieldBtn.Size = new System.Drawing.Size(72, 23);
+            this.AddFieldBtn.TabIndex = 3;
+            this.AddFieldBtn.Text = "新增欄位";
+            this.AddFieldBtn.UseVisualStyleBackColor = true;
+            this.AddFieldBtn.Click += new System.EventHandler(this.AddFieldBtn_Click);
             // 
             // dataGridView1
             // 
@@ -76,12 +93,12 @@
             this.label1.TabIndex = 1;
             this.label1.Text = "模組名稱";
             // 
-            // textBox1
+            // schemaNameTextBox
             // 
-            this.textBox1.Location = new System.Drawing.Point(90, 38);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(100, 22);
-            this.textBox1.TabIndex = 0;
+            this.schemaNameTextBox.Location = new System.Drawing.Point(90, 38);
+            this.schemaNameTextBox.Name = "schemaNameTextBox";
+            this.schemaNameTextBox.Size = new System.Drawing.Size(100, 22);
+            this.schemaNameTextBox.TabIndex = 0;
             // 
             // left2RightBtn
             // 
@@ -91,6 +108,7 @@
             this.left2RightBtn.TabIndex = 1;
             this.left2RightBtn.Text = ">";
             this.left2RightBtn.UseVisualStyleBackColor = true;
+            this.left2RightBtn.Click += new System.EventHandler(this.left2RightBtn_Click);
             // 
             // groupBox2
             // 
@@ -110,23 +128,6 @@
             this.schemaListBox.Name = "schemaListBox";
             this.schemaListBox.Size = new System.Drawing.Size(262, 388);
             this.schemaListBox.TabIndex = 0;
-            // 
-            // AddFieldBtn
-            // 
-            this.AddFieldBtn.Location = new System.Drawing.Point(192, 369);
-            this.AddFieldBtn.Name = "AddFieldBtn";
-            this.AddFieldBtn.Size = new System.Drawing.Size(72, 23);
-            this.AddFieldBtn.TabIndex = 3;
-            this.AddFieldBtn.Text = "新增欄位";
-            this.AddFieldBtn.UseVisualStyleBackColor = true;
-            this.AddFieldBtn.Click += new System.EventHandler(this.AddFieldBtn_Click);
-            // 
-            // fieldNameTextBox
-            // 
-            this.fieldNameTextBox.Location = new System.Drawing.Point(24, 369);
-            this.fieldNameTextBox.Name = "fieldNameTextBox";
-            this.fieldNameTextBox.Size = new System.Drawing.Size(162, 22);
-            this.fieldNameTextBox.TabIndex = 4;
             // 
             // SchemaManagePage
             // 
@@ -151,7 +152,7 @@
 
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox schemaNameTextBox;
         private System.Windows.Forms.Button left2RightBtn;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.DataGridView dataGridView1;

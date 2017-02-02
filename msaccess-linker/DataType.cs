@@ -6,14 +6,9 @@ using System.Threading.Tasks;
 
 namespace DataTypeExtension
 {
-    public class ComboBoxItem
+    public class map
     {
         public string Text { get; set; }
-        public object Value { get; set; }
-
-        public override string ToString()
-        {
-            return Text;
-        }
+        public string Value { get; set; }
     }
 }

@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using DataTypeExtension;
 
 namespace msaccess_linker
 {
@@ -23,6 +24,7 @@ namespace msaccess_linker
         private void Form1_Load(object sender, EventArgs e)
         {
             this.Text = "庫存管理系統 " + Info.version + " 版本";
+            this.ImeMode = System.Windows.Forms.ImeMode.OnHalf;
             DataTable table = serverDB.select("*", "schemas");
             DataRow[] result = table.Select();
             ComboBoxItem[] schemaComboBoxItems = ui.comboBoxItems(result, 1, 2);
@@ -85,52 +87,6 @@ namespace msaccess_linker
         {
             SchemaManagePage form = new SchemaManagePage();
             form.Show();
-        }
-    }
-
-    class UI
-    {
-        public ComboBoxItem[] comboBoxItems(DataRow[] array, int textIndex, int valueIndex)
-        {
-            ComboBoxItem[] temp = new ComboBoxItem[array.Length];
-            for (int i = 0; i < array.Length; i++)
-            {
-                DataRow row = array[i];
-                temp[i] = new ComboBoxItem();
-                temp[i].Text = row[textIndex].ToString();
-                temp[i].Value = row[valueIndex];
-            }
-
-            return temp;
-        }
-
-        public void addComboBoxItems(ComboBox comboBox, string[] array)
-        {
-            foreach (var item in array)
-            {
-                comboBox.Items.Add(item);
-            }
-        }
-
-        public void addComboBoxItems(ComboBox comboBox, ComboBoxItem[] comboBoxItems)
-        {
-            foreach (var item in comboBoxItems)
-            {
-                comboBox.Items.Add(item);
-            }
-        }
-
-        public void addComboBoxItem(ComboBox comboBox, string text)
-        {
-            comboBox.Items.Add(text);
-        }
-
-        public void addComboBoxItem(ComboBox comboBox, string text, object value)
-        {
-            ComboBoxItem temp = new ComboBoxItem();
-            temp.Text = text;
-            temp.Value = value;
-            comboBox.Items.Add(temp);
         }
     }
 }
