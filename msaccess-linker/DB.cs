@@ -8,10 +8,10 @@ using System.Data.OleDb;
 
 namespace msaccess_linker
 {
-    class DB
+    public class DB
     {
         OleDbConnection conn = new OleDbConnection();
-        string db = "";
+        private string db = "";
         public DB(string database)
         {
             string connStr = string.Format("Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" + database);
@@ -72,6 +72,11 @@ namespace msaccess_linker
             cmd.Connection = conn;
             cmd.CommandText = sql;
             cmd.ExecuteNonQuery();
+        }
+
+        public string name()
+        {
+            return db;
         }
 
         public void close()

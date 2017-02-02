@@ -22,11 +22,25 @@ namespace msaccess_linker
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            this.Text = "庫存管理系統 " + Info.version + " 版本";
             DataTable table = serverDB.select("*", "schemas");
             DataRow[] result = table.Select();
             ComboBoxItem[] schemaComboBoxItems = ui.comboBoxItems(result, 1, 2);
             ui.addComboBoxItems(schemaComboBox, schemaComboBoxItems);
             ui.addComboBoxItems(tableSelectComboBox, clientDB.getTables());
+            initTabPage1();
+        }
+
+        private void initTabPage1()
+        {
+            ui.addComboBoxItem(connComboBox, clientDB.name());
+            connComboBox.Text = clientDB.name();
+            DataTable table = new DataTable();
+            table.Columns.Add(clientDB.name() + "資料表列表");
+            foreach (var row in clientDB.getTables())
+                table.Rows.Add(row);
+
+            previewTableGridView.DataSource = table;
         }
 
         private void addTableBtn_Click(object sender, EventArgs e)
@@ -65,6 +79,12 @@ namespace msaccess_linker
             this.Text = "關閉中...";
             clientDB.close();
             serverDB.close();
+        }
+
+        private void schemaPageOpenBtn_Click(object sender, EventArgs e)
+        {
+            SchemaManagePage form = new SchemaManagePage();
+            form.Show();
         }
     }
 
