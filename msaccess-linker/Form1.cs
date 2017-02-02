@@ -26,11 +26,13 @@ namespace msaccess_linker
             DataRow[] result = table.Select();
             ComboBoxItem[] schemaComboBoxItems = ui.comboBoxItems(result, 1, 2);
             ui.addComboBoxItems(schemaComboBox, schemaComboBoxItems);
+            ui.addComboBoxItems(tableSelectComboBox, clientDB.getTables());
         }
 
         private void addTableBtn_Click(object sender, EventArgs e)
         {
             clientDB.create(newTableText.Text, ((ComboBoxItem)schemaComboBox.SelectedItem).Value.ToString());
+            ui.addComboBoxItem(tableSelectComboBox, newTableText.Text);
             MessageBox.Show("資料表已加入");
             newTableText.Text = "";
             schemaComboBox.Text = "";
@@ -81,12 +83,25 @@ namespace msaccess_linker
             return temp;
         }
 
+        public void addComboBoxItems(ComboBox comboBox, string[] array)
+        {
+            foreach (var item in array)
+            {
+                comboBox.Items.Add(item);
+            }
+        }
+
         public void addComboBoxItems(ComboBox comboBox, ComboBoxItem[] comboBoxItems)
         {
             foreach (var item in comboBoxItems)
             {
                 comboBox.Items.Add(item);
             }
+        }
+
+        public void addComboBoxItem(ComboBox comboBox, string text)
+        {
+            comboBox.Items.Add(text);
         }
 
         public void addComboBoxItem(ComboBox comboBox, string text, object value)

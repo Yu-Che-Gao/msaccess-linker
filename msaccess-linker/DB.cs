@@ -20,6 +20,18 @@ namespace msaccess_linker
             conn.Open();
         }
 
+        public string[] getTables()
+        {
+            DataTable table = conn.GetOleDbSchemaTable(OleDbSchemaGuid.Tables, new object[] { null, null, null, "TABLE" });
+            string[] array = new string[table.Rows.Count];
+            for (int i = 0; i < table.Rows.Count; i++)
+            {
+                DataRow row = table.Rows[i];
+                array[i] = row.ItemArray[2].ToString();
+            }
+            return array;
+        }
+
         public DataTable select(string field, string tableName)
         {
             DataTable table = new DataTable();
