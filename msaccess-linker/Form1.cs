@@ -14,9 +14,10 @@ namespace msaccess_linker
 {
     public partial class Form1 : Form
     {
-        DB clientDB = new DB("myTestingDB.mdb");
+        DB clientDB = null;
         DB serverDB = new DB("controlsDB.mdb");
         UI ui = new UI();
+
         public Form1()
         {
             InitializeComponent();
@@ -25,26 +26,56 @@ namespace msaccess_linker
         private void Form1_Load(object sender, EventArgs e)
         {
             this.Text = "庫存管理系統 " + Info.version + " 版本";
-            ui.addComboBoxItems(tableSelectComboBox, clientDB.getTables());
+            clientDB = new DB(getDBs()[0]);
+            initTabPage2();
             initTabPage1();
+        }
+
+        private string[] getDBs()
+        {
+            DataTable table = serverDB.select("*", "dbs");
+            DataRow[] result = table.Select();
+            string[] temp = new string[table.Rows.Count];
+            for (int i = 0; i < table.Rows.Count; i++)
+                temp[i] = result[i].ItemArray[1].ToString();
+
+            return temp;
+        }
+
+        private void initTabPage2()
+        {
+            tableSelectComboBox.SelectedValueChanged -= tableSelectComboBox_SelectedValueChanged;
+            tableSelectComboBox.Items.Clear();
+            ui.addComboBoxItems(tableSelectComboBox, clientDB.getTables());
+            tableSelectComboBox.SelectedValueChanged += tableSelectComboBox_SelectedValueChanged;
         }
 
         private void initTabPage1()
         {
+            connComboBox.SelectedValueChanged -= connComboBox_SelectedValueChanged; //暫時解除event handler
             newTableText.ImeMode = ImeMode.OnHalf;
             newTableText.Focus();
-            DataTable table = serverDB.select("*", "schemas");
-            DataRow[] result = table.Select();
-            ComboBoxItem[] schemaComboBoxItems = ui.comboBoxItems(result, 1, 2);
-            ui.addComboBoxItems(schemaComboBox, schemaComboBoxItems);
-            ui.addComboBoxItem(connComboBox, clientDB.name());
+            initNewSchema();
+            connComboBox.Items.Clear();
+            ui.addComboBoxItems(connComboBox, getDBs());
+
             connComboBox.Text = clientDB.name();
-            table = new DataTable();
+            DataTable table = new DataTable();
             table.Columns.Add(clientDB.name() + "資料表列表");
             foreach (var row in clientDB.getTables())
                 table.Rows.Add(row);
 
             previewTableGridView.DataSource = table;
+            connComboBox.SelectedValueChanged += connComboBox_SelectedValueChanged;
+        }
+
+        private void initNewSchema()
+        {
+            DataTable table = serverDB.select("*", "schemas");
+            DataRow[] result = table.Select();
+            ComboBoxItem[] schemaComboBoxItems = ui.comboBoxItems(result, 1, 2);
+            schemaComboBox.Items.Clear();
+            ui.addComboBoxItems(schemaComboBox, schemaComboBoxItems);
         }
 
         private void addTableBtn_Click(object sender, EventArgs e)
@@ -60,12 +91,6 @@ namespace msaccess_linker
             schemaLabel.Text = ((ComboBoxItem)schemaComboBox.SelectedItem).Value.ToString();
         }
 
-        private void tableSelectComboBox_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            DataTable table = clientDB.select("*", tableSelectComboBox.Text);
-            tableGridView.DataSource = table;
-        }
-
         private void addSchemaBtn_Click(object sender, EventArgs e)
         {
             serverDB.insert("schemas", "name, content", "'" + schemaNameText.Text + "', '" + schemaContentText.Text + "'");
@@ -77,6 +102,12 @@ namespace msaccess_linker
         public void addSchemaComboBox(string name, string content)
         {
             ui.addComboBoxItem(schemaComboBox, name, content);
+        }
+
+        private void clearConn()
+        {
+            connComboBox.Items.Clear();
+            ui.clearDataGridView(previewTableGridView);
         }
 
         private void clearNewTablePanel()
@@ -110,7 +141,12 @@ namespace msaccess_linker
             openAccessDialog.FileName = "";
             if (openAccessDialog.ShowDialog() == DialogResult.OK && openAccessDialog.FileName != null)
             {
+                if (File.Exists("./" + openAccessDialog.SafeFileName))
+                    File.Delete("./" + openAccessDialog.SafeFileName);
+
                 File.Copy(openAccessDialog.FileName, "./" + openAccessDialog.SafeFileName);
+                serverDB.insert("dbs", "name", "'" + openAccessDialog.SafeFileName + "'");
+                ui.addComboBoxItem(connComboBox, openAccessDialog.SafeFileName);
             }
         }
 
@@ -119,6 +155,62 @@ namespace msaccess_linker
             saveAccessDialog.FileName = "";
             if (saveAccessDialog.ShowDialog() == DialogResult.OK && saveAccessDialog.FileName != null)
                 File.Copy("./" + clientDB.name(), saveAccessDialog.FileName + ".mdb");
+        }
+
+        private void connComboBox_SelectedValueChanged(object sender, EventArgs e)
+        {
+            clientDB = new DB(connComboBox.Text);
+            initTabPage1();
+            initTabPage2();
+        }
+
+        private void tableSelectComboBox_SelectedValueChanged(object sender, EventArgs e)
+        {
+            DataTable table = clientDB.select("*", tableSelectComboBox.Text);
+            tableGridView.DataSource = table;
+        }
+
+        private void tableGridView_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            DataRow row = ui.getDataGridViewCurrentRow(tableGridView);
+            string[] columnNames = ui.getDataGridViewColName(tableGridView);
+            map[] temp = new map[tableGridView.Columns.Count];
+            for (int i = 0; i < tableGridView.Columns.Count; i++)
+            {
+                temp[i] = new map();
+                temp[i].Text = columnNames[i];
+                temp[i].Value = row[columnNames[i]].ToString();
+            }
+
+            ui.setCurrentEdit(temp);
+            ui.dynamicPanel(editPanel, temp);
+        }
+
+        private void insertEditBtn_Click(object sender, EventArgs e)
+        {
+            map[] current = ui.getCurrentEdit();
+            string field = "", value = "";
+            int i = 0;
+            for (i = 0; i < current.Length - 1; i++)
+            {
+                field += current[i].Text + ",";
+                value += "'" + current[i].Value + "',";
+            }
+
+            field += current[i].Text;
+            value += "'" + current[i].Value + "'";
+            clientDB.insert(tableSelectComboBox.Text, field, value);
+        }
+
+        private void clearEditBtn_Click(object sender, EventArgs e)
+        {
+            TextBox[] textBoxes = ui.findAllTextBox(editPanel);
+            ui.clearAllTextBoxes(textBoxes);
+        }
+
+        private void updateEditBtn_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

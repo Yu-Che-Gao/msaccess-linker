@@ -11,6 +11,7 @@ namespace msaccess_linker
 {
     public class UI
     {
+        private List<map> currentEdit = new List<map>();
         public ComboBoxItem[] comboBoxItems(DataRow[] array, int textIndex, int valueIndex)
         {
             ComboBoxItem[] temp = new ComboBoxItem[array.Length];
@@ -64,6 +65,67 @@ namespace msaccess_linker
             dataGridView.DataSource = null;
             dataGridView.Rows.Clear();
             dataGridView.Columns.Clear();
+        }
+
+        public TextBox[] findAllTextBox(Control ctr)
+        {
+            List<TextBox> temp = new List<TextBox>();
+            foreach (Control x in ctr.Controls)
+                if (x is TextBox) temp.Add((TextBox)x);
+
+            return temp.ToArray();
+        }
+
+        public void clearAllTextBoxes(TextBox[] textBoxes)
+        {
+            foreach (var textBox in textBoxes)
+                textBox.Text = "";
+        }
+
+        public void dynamicPanel(FlowLayoutPanel panel, map[] array)
+        {
+            panel.Controls.Clear();
+            foreach (var row in array)
+            {
+                var index = Array.IndexOf(array, row);
+                Label label = new Label();
+                TextBox textBox = new TextBox();
+                label.Name = "label" + index;
+                label.Text = row.Text;
+                textBox.Text = row.Value.ToString();
+                textBox.Name = "textBox" + index;
+                panel.Controls.Add(label);
+                panel.Controls.Add(textBox);
+                panel.SetFlowBreak(textBox, true);
+            }
+        }
+
+        public string[] getDataGridViewColName(DataGridView view)
+        {
+            string[] cols = ((DataTable)view.DataSource).Columns
+                .Cast<DataColumn>()
+                .Select(x => x.ColumnName)
+                .ToArray();
+
+            return cols;
+        }
+
+        public DataRow getDataGridViewCurrentRow(DataGridView view)
+        {
+            DataRowView current = (DataRowView)view.CurrentRow.DataBoundItem;
+            DataRow row = current.Row;
+            return row;
+        }
+
+        public void setCurrentEdit(map[] data)
+        {
+            currentEdit.Clear();
+            currentEdit.AddRange(data);
+        }
+
+        public map[] getCurrentEdit()
+        {
+            return currentEdit.ToArray();
         }
     }
 }

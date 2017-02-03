@@ -45,13 +45,20 @@
             this.tableSelectComboBox = new System.Windows.Forms.ComboBox();
             this.存取資料表 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.exportDBBtn = new System.Windows.Forms.Button();
             this.schemaPageOpenBtn = new System.Windows.Forms.Button();
             this.importDBBtn = new System.Windows.Forms.Button();
             this.previewTableGridView = new System.Windows.Forms.DataGridView();
             this.label5 = new System.Windows.Forms.Label();
             this.connComboBox = new System.Windows.Forms.ComboBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.exportDBBtn = new System.Windows.Forms.Button();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.editPanel = new System.Windows.Forms.FlowLayoutPanel();
+            this.updateEditBtn = new System.Windows.Forms.Button();
+            this.insertEditBtn = new System.Windows.Forms.Button();
+            this.clearEditBtn = new System.Windows.Forms.Button();
+            this.label6 = new System.Windows.Forms.Label();
             this.openAccessDialog = new System.Windows.Forms.OpenFileDialog();
             this.saveAccessDialog = new System.Windows.Forms.SaveFileDialog();
             this.groupBox1.SuspendLayout();
@@ -61,6 +68,7 @@
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.previewTableGridView)).BeginInit();
             this.tabPage2.SuspendLayout();
+            this.groupBox3.SuspendLayout();
             this.SuspendLayout();
             // 
             // addTableBtn
@@ -76,6 +84,7 @@
             // 
             // schemaComboBox
             // 
+            this.schemaComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.schemaComboBox.FormattingEnabled = true;
             this.schemaComboBox.Location = new System.Drawing.Point(156, 55);
             this.schemaComboBox.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
@@ -205,35 +214,36 @@
             // 
             this.tableGridView.AllowUserToAddRows = false;
             this.tableGridView.AllowUserToDeleteRows = false;
-            this.tableGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.tableGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.tableGridView.Location = new System.Drawing.Point(38, 146);
+            this.tableGridView.Location = new System.Drawing.Point(33, 80);
             this.tableGridView.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.tableGridView.Name = "tableGridView";
             this.tableGridView.ReadOnly = true;
             this.tableGridView.RowTemplate.Height = 24;
-            this.tableGridView.Size = new System.Drawing.Size(500, 224);
+            this.tableGridView.Size = new System.Drawing.Size(374, 327);
             this.tableGridView.TabIndex = 13;
+            this.tableGridView.CellMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.tableGridView_CellMouseClick);
             // 
             // tableSelectComboBox
             // 
+            this.tableSelectComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.tableSelectComboBox.FormattingEnabled = true;
-            this.tableSelectComboBox.Location = new System.Drawing.Point(38, 82);
+            this.tableSelectComboBox.Location = new System.Drawing.Point(125, 22);
             this.tableSelectComboBox.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.tableSelectComboBox.Name = "tableSelectComboBox";
             this.tableSelectComboBox.Size = new System.Drawing.Size(198, 28);
             this.tableSelectComboBox.TabIndex = 14;
-            this.tableSelectComboBox.SelectedIndexChanged += new System.EventHandler(this.tableSelectComboBox_SelectedIndexChanged);
+            this.tableSelectComboBox.SelectedValueChanged += new System.EventHandler(this.tableSelectComboBox_SelectedValueChanged);
             // 
             // 存取資料表
             // 
             this.存取資料表.Controls.Add(this.tabPage1);
             this.存取資料表.Controls.Add(this.tabPage2);
-            this.存取資料表.Location = new System.Drawing.Point(24, 20);
+            this.存取資料表.Location = new System.Drawing.Point(24, 18);
             this.存取資料表.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.存取資料表.Name = "存取資料表";
             this.存取資料表.SelectedIndex = 0;
-            this.存取資料表.Size = new System.Drawing.Size(1191, 462);
+            this.存取資料表.Size = new System.Drawing.Size(1160, 462);
             this.存取資料表.TabIndex = 15;
             // 
             // tabPage1
@@ -251,9 +261,20 @@
             this.tabPage1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.tabPage1.Size = new System.Drawing.Size(1183, 429);
+            this.tabPage1.Size = new System.Drawing.Size(1152, 429);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "管理資料庫";
+            // 
+            // exportDBBtn
+            // 
+            this.exportDBBtn.Location = new System.Drawing.Point(22, 105);
+            this.exportDBBtn.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.exportDBBtn.Name = "exportDBBtn";
+            this.exportDBBtn.Size = new System.Drawing.Size(373, 38);
+            this.exportDBBtn.TabIndex = 14;
+            this.exportDBBtn.Text = "匯出access檔案";
+            this.exportDBBtn.UseVisualStyleBackColor = true;
+            this.exportDBBtn.Click += new System.EventHandler(this.exportDBBtn_Click);
             // 
             // schemaPageOpenBtn
             // 
@@ -304,36 +325,99 @@
             // 
             // connComboBox
             // 
+            this.connComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.connComboBox.FormattingEnabled = true;
             this.connComboBox.Location = new System.Drawing.Point(179, 10);
             this.connComboBox.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.connComboBox.Name = "connComboBox";
             this.connComboBox.Size = new System.Drawing.Size(216, 28);
             this.connComboBox.TabIndex = 0;
+            this.connComboBox.SelectedValueChanged += new System.EventHandler(this.connComboBox_SelectedValueChanged);
             // 
             // tabPage2
             // 
             this.tabPage2.BackColor = System.Drawing.SystemColors.Control;
+            this.tabPage2.Controls.Add(this.groupBox4);
+            this.tabPage2.Controls.Add(this.groupBox3);
+            this.tabPage2.Controls.Add(this.label6);
             this.tabPage2.Controls.Add(this.tableSelectComboBox);
             this.tabPage2.Controls.Add(this.tableGridView);
-            this.tabPage2.Location = new System.Drawing.Point(4, 26);
+            this.tabPage2.Location = new System.Drawing.Point(4, 29);
             this.tabPage2.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.tabPage2.Size = new System.Drawing.Size(1614, 720);
+            this.tabPage2.Size = new System.Drawing.Size(1152, 429);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "資料檢視";
             // 
-            // exportDBBtn
+            // groupBox4
             // 
-            this.exportDBBtn.Location = new System.Drawing.Point(22, 105);
-            this.exportDBBtn.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.exportDBBtn.Name = "exportDBBtn";
-            this.exportDBBtn.Size = new System.Drawing.Size(373, 38);
-            this.exportDBBtn.TabIndex = 14;
-            this.exportDBBtn.Text = "匯出access檔案";
-            this.exportDBBtn.UseVisualStyleBackColor = true;
-            this.exportDBBtn.Click += new System.EventHandler(this.exportDBBtn_Click);
+            this.groupBox4.Location = new System.Drawing.Point(447, 22);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Size = new System.Drawing.Size(359, 385);
+            this.groupBox4.TabIndex = 17;
+            this.groupBox4.TabStop = false;
+            this.groupBox4.Text = "查詢區";
+            // 
+            // groupBox3
+            // 
+            this.groupBox3.Controls.Add(this.editPanel);
+            this.groupBox3.Controls.Add(this.updateEditBtn);
+            this.groupBox3.Controls.Add(this.insertEditBtn);
+            this.groupBox3.Controls.Add(this.clearEditBtn);
+            this.groupBox3.Location = new System.Drawing.Point(835, 22);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(295, 385);
+            this.groupBox3.TabIndex = 16;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "編輯區";
+            // 
+            // editPanel
+            // 
+            this.editPanel.AutoScroll = true;
+            this.editPanel.Location = new System.Drawing.Point(23, 29);
+            this.editPanel.Name = "editPanel";
+            this.editPanel.Size = new System.Drawing.Size(258, 303);
+            this.editPanel.TabIndex = 4;
+            // 
+            // updateEditBtn
+            // 
+            this.updateEditBtn.Location = new System.Drawing.Point(200, 338);
+            this.updateEditBtn.Name = "updateEditBtn";
+            this.updateEditBtn.Size = new System.Drawing.Size(81, 30);
+            this.updateEditBtn.TabIndex = 3;
+            this.updateEditBtn.Text = "更改資料";
+            this.updateEditBtn.UseVisualStyleBackColor = true;
+            this.updateEditBtn.Click += new System.EventHandler(this.updateEditBtn_Click);
+            // 
+            // insertEditBtn
+            // 
+            this.insertEditBtn.Location = new System.Drawing.Point(111, 338);
+            this.insertEditBtn.Name = "insertEditBtn";
+            this.insertEditBtn.Size = new System.Drawing.Size(82, 30);
+            this.insertEditBtn.TabIndex = 2;
+            this.insertEditBtn.Text = "新增資料";
+            this.insertEditBtn.UseVisualStyleBackColor = true;
+            this.insertEditBtn.Click += new System.EventHandler(this.insertEditBtn_Click);
+            // 
+            // clearEditBtn
+            // 
+            this.clearEditBtn.Location = new System.Drawing.Point(23, 338);
+            this.clearEditBtn.Name = "clearEditBtn";
+            this.clearEditBtn.Size = new System.Drawing.Size(82, 30);
+            this.clearEditBtn.TabIndex = 1;
+            this.clearEditBtn.Text = "清除內容";
+            this.clearEditBtn.UseVisualStyleBackColor = true;
+            this.clearEditBtn.Click += new System.EventHandler(this.clearEditBtn_Click);
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(29, 25);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(89, 20);
+            this.label6.TabIndex = 15;
+            this.label6.Text = "資料表名稱";
             // 
             // openAccessDialog
             // 
@@ -367,6 +451,8 @@
             this.tabPage1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.previewTableGridView)).EndInit();
             this.tabPage2.ResumeLayout(false);
+            this.tabPage2.PerformLayout();
+            this.groupBox3.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -399,6 +485,13 @@
         private System.Windows.Forms.Button exportDBBtn;
         private System.Windows.Forms.OpenFileDialog openAccessDialog;
         private System.Windows.Forms.SaveFileDialog saveAccessDialog;
+        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.GroupBox groupBox4;
+        private System.Windows.Forms.Button updateEditBtn;
+        private System.Windows.Forms.Button insertEditBtn;
+        private System.Windows.Forms.Button clearEditBtn;
+        private System.Windows.Forms.FlowLayoutPanel editPanel;
     }
 }
 
