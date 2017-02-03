@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data;
 using System.Data.OleDb;
+using DataTypeExtension;
 
 namespace msaccess_linker
 {
@@ -65,6 +66,15 @@ namespace msaccess_linker
             cmd.ExecuteNonQuery();
         }
 
+        public void update(string tableName, string setting, string condition)
+        {
+            string sql = "UPDATE " + tableName + " SET " + setting + " WHERE " + condition;
+            OleDbCommand cmd = new OleDbCommand();
+            cmd.Connection = conn;
+            cmd.CommandText = sql;
+            cmd.ExecuteNonQuery();
+        }
+
         public void create(string tableName, string schema)
         {
             string sql = "CREATE TABLE " + tableName + "(" + schema + ")";
@@ -72,6 +82,15 @@ namespace msaccess_linker
             cmd.Connection = conn;
             cmd.CommandText = sql;
             cmd.ExecuteNonQuery();
+        }
+
+        public string getJOINSQL(map[] array)
+        {
+            if (array.Length == 2)
+                return "(" + array[0].Text + " INNER JOIN " + array[0].Text + "." + array[0].Value + "=" + array[1].Text + "." + array[1].Value + ")";
+
+            map[] temp = array.Where((val, index) => index != 0).ToArray();
+            return "(" + getJOINSQL(temp) + " INNER JOIN " + array[0].Text + "." + array[0].Value + "=" + array[1].Text + "." + array[1].Value + ")";
         }
 
         public string name()

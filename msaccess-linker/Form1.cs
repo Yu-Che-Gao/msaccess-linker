@@ -44,7 +44,7 @@ namespace msaccess_linker
 
         private void initTabPage2()
         {
-            tableSelectComboBox.SelectedValueChanged -= tableSelectComboBox_SelectedValueChanged;
+            tableSelectComboBox.SelectedValueChanged -= tableSelectComboBox_SelectedValueChanged; //暫時解除event handler
             tableSelectComboBox.Items.Clear();
             ui.addComboBoxItems(tableSelectComboBox, clientDB.getTables());
             tableSelectComboBox.SelectedValueChanged += tableSelectComboBox_SelectedValueChanged;
@@ -166,8 +166,7 @@ namespace msaccess_linker
 
         private void tableSelectComboBox_SelectedValueChanged(object sender, EventArgs e)
         {
-            DataTable table = clientDB.select("*", tableSelectComboBox.Text);
-            tableGridView.DataSource = table;
+            tableGridView.DataSource = clientDB.select("*", tableSelectComboBox.Text);
         }
 
         private void tableGridView_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
@@ -188,18 +187,20 @@ namespace msaccess_linker
 
         private void insertEditBtn_Click(object sender, EventArgs e)
         {
+            TextBox[] textBoxes = ui.findAllTextBox(editPanel);
             map[] current = ui.getCurrentEdit();
             string field = "", value = "";
             int i = 0;
             for (i = 0; i < current.Length - 1; i++)
             {
                 field += current[i].Text + ",";
-                value += "'" + current[i].Value + "',";
+                value += "'" + textBoxes[i].Text + "',";
             }
 
             field += current[i].Text;
-            value += "'" + current[i].Value + "'";
+            value += "'" + textBoxes[i].Text + "'";
             clientDB.insert(tableSelectComboBox.Text, field, value);
+            tableGridView.DataSource = clientDB.select("*", tableSelectComboBox.Text);
         }
 
         private void clearEditBtn_Click(object sender, EventArgs e)
@@ -210,7 +211,57 @@ namespace msaccess_linker
 
         private void updateEditBtn_Click(object sender, EventArgs e)
         {
+            TextBox[] textBoxes = ui.findAllTextBox(editPanel);
+            map[] current = ui.getCurrentEdit();
+            string[] cols = ui.getDataGridViewColName(tableGridView);
+            string setting = "";
+            int i = 0;
+            for (i = 0; i < current.Length - 1; i++)
+                setting += "[" + current[i].Text + "]='" + textBoxes[i].Text + "',";
 
+            setting += "[" + current[i].Text + "]='" + textBoxes[i].Text + "'";
+            clientDB.update(tableSelectComboBox.Text, setting, "[" + current[0].Text + "]=" + cols[0]);
+        }
+
+        private void companyNameTextBox_TextChanged(object sender, EventArgs e)
+        {
+            bindingFunction();
+        }
+
+        private void bindingFunction()
+        {
+            TextBox[] all = ui.findAllTextBox(selectProductPanel);
+            TextBox[] textBoxes = ui.findAllTextBox(selectProductPanel)
+                .Where((obj) => obj.Text != "")
+                .ToArray(); // 找出所有沒有字的
+            map[] queryRule = new map[]
+            {
+                new map() { Text="廠商", Value="廠商" },
+                new map() { Text="天線",Value= "識別碼" },
+                new map() { Text="零件", Value="零件編號" }
+            };
+
+            if (textBoxes.Length == 0)
+                return;
+            else if (textBoxes.Length == 1)
+            {
+                int index = Array.IndexOf(all, textBoxes[0]);
+                queryShowGridView.DataSource = clientDB.select("*", queryRule[index].Text, "[" + queryRule[index].Value + "]='" + textBoxes[0].Text + "'");
+            }
+            else
+            {
+                
+            }
+        }
+
+        private void antennaTextBox_TextChanged(object sender, EventArgs e)
+        {
+            bindingFunction();
+        }
+
+        private void componentNumTextBox_TextChanged(object sender, EventArgs e)
+        {
+            bindingFunction();
         }
     }
 }

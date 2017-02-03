@@ -52,13 +52,25 @@
             this.label5 = new System.Windows.Forms.Label();
             this.connComboBox = new System.Windows.Forms.ComboBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.simpleQuery = new System.Windows.Forms.TextBox();
+            this.label7 = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.editPanel = new System.Windows.Forms.FlowLayoutPanel();
             this.updateEditBtn = new System.Windows.Forms.Button();
             this.insertEditBtn = new System.Windows.Forms.Button();
             this.clearEditBtn = new System.Windows.Forms.Button();
             this.label6 = new System.Windows.Forms.Label();
+            this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.queryShowGridView = new System.Windows.Forms.DataGridView();
+            this.selectProductPanel = new System.Windows.Forms.FlowLayoutPanel();
+            this.label9 = new System.Windows.Forms.Label();
+            this.companyNameTextBox = new System.Windows.Forms.TextBox();
+            this.label10 = new System.Windows.Forms.Label();
+            this.antennaTextBox = new System.Windows.Forms.TextBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.componentNumTextBox = new System.Windows.Forms.TextBox();
+            this.tabPage4 = new System.Windows.Forms.TabPage();
             this.openAccessDialog = new System.Windows.Forms.OpenFileDialog();
             this.saveAccessDialog = new System.Windows.Forms.SaveFileDialog();
             this.groupBox1.SuspendLayout();
@@ -69,6 +81,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.previewTableGridView)).BeginInit();
             this.tabPage2.SuspendLayout();
             this.groupBox3.SuspendLayout();
+            this.tabPage3.SuspendLayout();
+            this.groupBox4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.queryShowGridView)).BeginInit();
+            this.selectProductPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // addTableBtn
@@ -220,7 +236,7 @@
             this.tableGridView.Name = "tableGridView";
             this.tableGridView.ReadOnly = true;
             this.tableGridView.RowTemplate.Height = 24;
-            this.tableGridView.Size = new System.Drawing.Size(374, 327);
+            this.tableGridView.Size = new System.Drawing.Size(768, 327);
             this.tableGridView.TabIndex = 13;
             this.tableGridView.CellMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.tableGridView_CellMouseClick);
             // 
@@ -239,6 +255,8 @@
             // 
             this.存取資料表.Controls.Add(this.tabPage1);
             this.存取資料表.Controls.Add(this.tabPage2);
+            this.存取資料表.Controls.Add(this.tabPage3);
+            this.存取資料表.Controls.Add(this.tabPage4);
             this.存取資料表.Location = new System.Drawing.Point(24, 18);
             this.存取資料表.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.存取資料表.Name = "存取資料表";
@@ -267,7 +285,7 @@
             // 
             // exportDBBtn
             // 
-            this.exportDBBtn.Location = new System.Drawing.Point(22, 105);
+            this.exportDBBtn.Location = new System.Drawing.Point(22, 96);
             this.exportDBBtn.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.exportDBBtn.Name = "exportDBBtn";
             this.exportDBBtn.Size = new System.Drawing.Size(373, 38);
@@ -337,7 +355,8 @@
             // tabPage2
             // 
             this.tabPage2.BackColor = System.Drawing.SystemColors.Control;
-            this.tabPage2.Controls.Add(this.groupBox4);
+            this.tabPage2.Controls.Add(this.simpleQuery);
+            this.tabPage2.Controls.Add(this.label7);
             this.tabPage2.Controls.Add(this.groupBox3);
             this.tabPage2.Controls.Add(this.label6);
             this.tabPage2.Controls.Add(this.tableSelectComboBox);
@@ -350,14 +369,22 @@
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "資料檢視";
             // 
-            // groupBox4
+            // simpleQuery
             // 
-            this.groupBox4.Location = new System.Drawing.Point(447, 22);
-            this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(359, 385);
-            this.groupBox4.TabIndex = 17;
-            this.groupBox4.TabStop = false;
-            this.groupBox4.Text = "查詢區";
+            this.simpleQuery.Enabled = false;
+            this.simpleQuery.Location = new System.Drawing.Point(488, 21);
+            this.simpleQuery.Name = "simpleQuery";
+            this.simpleQuery.Size = new System.Drawing.Size(140, 29);
+            this.simpleQuery.TabIndex = 18;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(409, 24);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(73, 20);
+            this.label7.TabIndex = 17;
+            this.label7.Text = "快速查詢";
             // 
             // groupBox3
             // 
@@ -365,7 +392,7 @@
             this.groupBox3.Controls.Add(this.updateEditBtn);
             this.groupBox3.Controls.Add(this.insertEditBtn);
             this.groupBox3.Controls.Add(this.clearEditBtn);
-            this.groupBox3.Location = new System.Drawing.Point(835, 22);
+            this.groupBox3.Location = new System.Drawing.Point(824, 22);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(295, 385);
             this.groupBox3.TabIndex = 16;
@@ -382,6 +409,7 @@
             // 
             // updateEditBtn
             // 
+            this.updateEditBtn.Enabled = false;
             this.updateEditBtn.Location = new System.Drawing.Point(200, 338);
             this.updateEditBtn.Name = "updateEditBtn";
             this.updateEditBtn.Size = new System.Drawing.Size(81, 30);
@@ -419,6 +447,115 @@
             this.label6.TabIndex = 15;
             this.label6.Text = "資料表名稱";
             // 
+            // tabPage3
+            // 
+            this.tabPage3.BackColor = System.Drawing.SystemColors.Control;
+            this.tabPage3.Controls.Add(this.groupBox4);
+            this.tabPage3.Controls.Add(this.selectProductPanel);
+            this.tabPage3.Location = new System.Drawing.Point(4, 29);
+            this.tabPage3.Name = "tabPage3";
+            this.tabPage3.Size = new System.Drawing.Size(1152, 429);
+            this.tabPage3.TabIndex = 2;
+            this.tabPage3.Text = "庫存查詢";
+            // 
+            // groupBox4
+            // 
+            this.groupBox4.Controls.Add(this.queryShowGridView);
+            this.groupBox4.Location = new System.Drawing.Point(301, 29);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Size = new System.Drawing.Size(642, 316);
+            this.groupBox4.TabIndex = 8;
+            this.groupBox4.TabStop = false;
+            this.groupBox4.Text = "結果顯示區";
+            // 
+            // queryShowGridView
+            // 
+            this.queryShowGridView.AllowUserToAddRows = false;
+            this.queryShowGridView.AllowUserToDeleteRows = false;
+            this.queryShowGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.queryShowGridView.Location = new System.Drawing.Point(31, 32);
+            this.queryShowGridView.Name = "queryShowGridView";
+            this.queryShowGridView.ReadOnly = true;
+            this.queryShowGridView.RowTemplate.Height = 24;
+            this.queryShowGridView.Size = new System.Drawing.Size(593, 265);
+            this.queryShowGridView.TabIndex = 7;
+            // 
+            // selectProductPanel
+            // 
+            this.selectProductPanel.Controls.Add(this.label9);
+            this.selectProductPanel.Controls.Add(this.companyNameTextBox);
+            this.selectProductPanel.Controls.Add(this.label10);
+            this.selectProductPanel.Controls.Add(this.antennaTextBox);
+            this.selectProductPanel.Controls.Add(this.label8);
+            this.selectProductPanel.Controls.Add(this.componentNumTextBox);
+            this.selectProductPanel.Location = new System.Drawing.Point(21, 26);
+            this.selectProductPanel.Name = "selectProductPanel";
+            this.selectProductPanel.Size = new System.Drawing.Size(205, 233);
+            this.selectProductPanel.TabIndex = 6;
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(3, 0);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(73, 20);
+            this.label9.TabIndex = 2;
+            this.label9.Text = "廠商名稱";
+            // 
+            // companyNameTextBox
+            // 
+            this.companyNameTextBox.ImeMode = System.Windows.Forms.ImeMode.On;
+            this.companyNameTextBox.Location = new System.Drawing.Point(82, 3);
+            this.companyNameTextBox.Name = "companyNameTextBox";
+            this.companyNameTextBox.Size = new System.Drawing.Size(100, 29);
+            this.companyNameTextBox.TabIndex = 3;
+            this.companyNameTextBox.TextChanged += new System.EventHandler(this.companyNameTextBox_TextChanged);
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(3, 35);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(73, 20);
+            this.label10.TabIndex = 5;
+            this.label10.Text = "天線編號";
+            // 
+            // antennaTextBox
+            // 
+            this.antennaTextBox.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.antennaTextBox.Location = new System.Drawing.Point(82, 38);
+            this.antennaTextBox.Name = "antennaTextBox";
+            this.antennaTextBox.Size = new System.Drawing.Size(100, 29);
+            this.antennaTextBox.TabIndex = 4;
+            this.antennaTextBox.TextChanged += new System.EventHandler(this.antennaTextBox_TextChanged);
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(3, 70);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(73, 20);
+            this.label8.TabIndex = 1;
+            this.label8.Text = "零件編號";
+            // 
+            // componentNumTextBox
+            // 
+            this.componentNumTextBox.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.componentNumTextBox.Location = new System.Drawing.Point(82, 73);
+            this.componentNumTextBox.Name = "componentNumTextBox";
+            this.componentNumTextBox.Size = new System.Drawing.Size(100, 29);
+            this.componentNumTextBox.TabIndex = 0;
+            this.componentNumTextBox.TextChanged += new System.EventHandler(this.componentNumTextBox_TextChanged);
+            // 
+            // tabPage4
+            // 
+            this.tabPage4.BackColor = System.Drawing.SystemColors.Control;
+            this.tabPage4.Location = new System.Drawing.Point(4, 29);
+            this.tabPage4.Name = "tabPage4";
+            this.tabPage4.Size = new System.Drawing.Size(1152, 429);
+            this.tabPage4.TabIndex = 3;
+            this.tabPage4.Text = "版本資訊";
+            // 
             // openAccessDialog
             // 
             this.openAccessDialog.FileName = "openFileDialog1";
@@ -453,6 +590,11 @@
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
             this.groupBox3.ResumeLayout(false);
+            this.tabPage3.ResumeLayout(false);
+            this.groupBox4.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.queryShowGridView)).EndInit();
+            this.selectProductPanel.ResumeLayout(false);
+            this.selectProductPanel.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -487,11 +629,23 @@
         private System.Windows.Forms.SaveFileDialog saveAccessDialog;
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.GroupBox groupBox4;
         private System.Windows.Forms.Button updateEditBtn;
         private System.Windows.Forms.Button insertEditBtn;
         private System.Windows.Forms.Button clearEditBtn;
         private System.Windows.Forms.FlowLayoutPanel editPanel;
+        private System.Windows.Forms.TabPage tabPage3;
+        private System.Windows.Forms.TabPage tabPage4;
+        private System.Windows.Forms.TextBox simpleQuery;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.FlowLayoutPanel selectProductPanel;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.TextBox companyNameTextBox;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.TextBox antennaTextBox;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.TextBox componentNumTextBox;
+        private System.Windows.Forms.GroupBox groupBox4;
+        private System.Windows.Forms.DataGridView queryShowGridView;
     }
 }
 
